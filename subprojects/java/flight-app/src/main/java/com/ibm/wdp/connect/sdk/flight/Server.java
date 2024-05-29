@@ -27,7 +27,7 @@ public class Server implements AutoCloseable, ServletContextListener
 
     private Service service;
     private DelegateServer delegate;
-
+    private final ServerTokenAuthHandler authHandler = new ServerTokenAuthHandler();
     /**
      * {@inheritDoc}
      */
@@ -40,9 +40,9 @@ public class Server implements AutoCloseable, ServletContextListener
             service = new Service();
             try {
                 final URI uri = new URI(flightUrl);
-                delegate = new DelegateServer(Service.getRootAllocator(), uri.getPort(),
+                delegate = new DelegateServer(service.getRootAllocator(), uri.getPort(),
                         LocationSchemes.GRPC_TLS.equals(uri.getScheme()) ? SSLContext.getDefault() : null,
-                        ServerTokenAuthHandler.getInstance(), Service.getProducer(), null);
+                        authHandler.getInstance(), service.getProducer(), null);
                 delegate.start();
             }
             catch (final Exception e) {

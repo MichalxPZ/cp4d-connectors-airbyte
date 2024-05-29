@@ -16,18 +16,17 @@ import java.util.stream.Collectors;
 public class AirbyteConnectorFactory implements ConnectorFactory
 {
     private static final Map<String, String> typesImageMap = Map.of(
-            "airbyte-postgres", "airbyte/source-postgres",
-            "airbyte-mongodb","airbyte/source-mongodb",
-            "airbyte-file", "airbyte/source-file"
+            "nasa", "airbyte/source-nasa",
+            "nytimes","airbyte/source-nytimes"
     );
-    private static final AirbyteConnectorFactory INSTANCE = new AirbyteConnectorFactory();
+    private final AirbyteConnectorFactory INSTANCE = new AirbyteConnectorFactory();
 
     /**
      * A connector factory instance.
      *
      * @return a connector factory instance
      */
-    public static AirbyteConnectorFactory getInstance()
+    public AirbyteConnectorFactory getInstance()
     {
         return INSTANCE;
     }

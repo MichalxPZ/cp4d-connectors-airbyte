@@ -28,6 +28,7 @@ public class AirbyteConnector
     private final String imageName;
     private final HashMap<String, Object> connectionProperties;
     private final Gson gson = new Gson();
+    private final AirbyteProcessRunner airbyteProcessRunner = new AirbyteProcessRunner();
 
     /**
      * Creates a row-based connector.
@@ -96,10 +97,10 @@ public class AirbyteConnector
     public ConnectionActionResponse performAction(String action, ConnectionActionConfiguration config) throws Exception {
         switch (action) {
             case AirbyteCustomActions.SPEC_ACTION:
-                return AirbyteProcessRunner.spec(imageName);
+                return airbyteProcessRunner.spec(imageName);
             case AirbyteCustomActions.CHECK_ACTION:
                 String configuration = gson.toJson(connectionProperties);
-                return AirbyteProcessRunner.check(imageName, configuration);
+                return airbyteProcessRunner.check(imageName, configuration);
             default:
                 return null;
         }

@@ -33,6 +33,9 @@ public class Service implements AutoCloseable, BindableService
     private final ExecutorService executor;
     private final BindableService flightService;
     private final List<ServerInterceptor> interceptors;
+    final RootAllocator ALLOCATOR_INSTANCE = new RootAllocator();
+
+    final FlightProducer PRODUCER_INSTANCE = new DelegatingFlightProducer();
 
     /**
      * Service constructor.
@@ -41,30 +44,24 @@ public class Service implements AutoCloseable, BindableService
     {
         this.executor = Executors.newCachedThreadPool();
         this.flightService
-                = FlightGrpcUtils.createFlightService(getRootAllocator(), getProducer(), ServerTokenAuthHandler.getInstance(), executor);
-        this.interceptors = Arrays.asList(new ServerAuthInterceptor(ServerTokenAuthHandler.getInstance()));
-    }
-
-    private static class Holder
-    {
-        static final RootAllocator ALLOCATOR_INSTANCE = new RootAllocator();
-        static final FlightProducer PRODUCER_INSTANCE = new DelegatingFlightProducer();
+                = FlightGrpcUtils.createFlightService(getRootAllocator(), getProducer(), new ServerTokenAuthHandler().getInstance(), executor);
+        this.interceptors = Arrays.asList(new ServerAuthInterceptor(new ServerTokenAuthHandler().getInstance()));
     }
 
     /**
      * @return the global RootAllocator.
      */
-    public static RootAllocator getRootAllocator()
+    public RootAllocator getRootAllocator()
     {
-        return Holder.ALLOCATOR_INSTANCE;
+        return this.ALLOCATOR_INSTANCE;
     }
 
     /**
      * @return the global Producer.
      */
-    public static FlightProducer getProducer()
+    public FlightProducer getProducer()
     {
-        return Holder.PRODUCER_INSTANCE;
+        return this.PRODUCER_INSTANCE;
     }
 
     /**

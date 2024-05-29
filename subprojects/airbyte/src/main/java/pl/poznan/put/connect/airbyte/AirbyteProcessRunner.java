@@ -25,7 +25,7 @@ public class AirbyteProcessRunner {
     private static final String POD_NAMESPACE = System.getenv("POD_NAMESPACE");
     private static final KubernetesClient KUBERNETES_CLIENT = new KubernetesClientBuilder().build();
 
-    static ConnectionActionResponse spec(String imageName) {
+    ConnectionActionResponse spec(String imageName) {
         ConnectionActionResponse response = new ConnectionActionResponse();
         try {
             Process podProcess = new PodProcess(
@@ -50,7 +50,7 @@ public class AirbyteProcessRunner {
         return response;
     }
 
-    static ConnectionActionResponse check(String imageName, String config) {
+    ConnectionActionResponse check(String imageName, String config) {
         ConnectionActionResponse response = new ConnectionActionResponse();
         try {
             Process podProcess = new PodProcess(

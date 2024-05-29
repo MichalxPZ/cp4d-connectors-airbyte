@@ -24,18 +24,14 @@ public class ServerTokenAuthHandler implements ServerAuthHandler
     private static final Logger LOGGER = getLogger(ServerTokenAuthHandler.class);
 
     private final PublicKey[] publicKeys;
-
-    private static class Holder
-    {
-        static final ServerTokenAuthHandler INSTANCE = new ServerTokenAuthHandler(AuthUtils.getAllVerificationKeys());
-    }
+    private final ServerTokenAuthHandler INSTANCE = new ServerTokenAuthHandler(AuthUtils.getAllVerificationKeys());
 
     /**
      * @return the singleton instance.
      */
-    public static ServerTokenAuthHandler getInstance()
+    public ServerTokenAuthHandler getInstance()
     {
-        return Holder.INSTANCE;
+        return this.INSTANCE;
     }
 
     /**

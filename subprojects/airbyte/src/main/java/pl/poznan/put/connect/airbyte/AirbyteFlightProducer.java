@@ -21,7 +21,7 @@ public class AirbyteFlightProducer extends ConnectorFlightProducer
     @Override
     protected ConnectorFactory getConnectorFactory()
     {
-        return AirbyteConnectorFactory.getInstance();
+        return new AirbyteConnectorFactory().getInstance();
     }
 
 }

@@ -23,7 +23,7 @@ public class TestPropertyValidation
         final String typeName = "TODO";
         final ConnectionProperties properties = new ConnectionProperties();
         // Setup connection properties
-        AirbyteConnectorFactory.getInstance().createConnector(typeName, properties);
+        new AirbyteConnectorFactory().getInstance().createConnector(typeName, properties);
     }
 
     /**
@@ -35,6 +35,6 @@ public class TestPropertyValidation
         final String typeName = "airbyte";
         final ConnectionProperties properties = new ConnectionProperties();
         // Setup connection properties
-        assertNotNull(AirbyteConnectorFactory.getInstance().createConnector(typeName, properties));
+        assertNotNull(new AirbyteConnectorFactory().getInstance().createConnector(typeName, properties));
     }
 }

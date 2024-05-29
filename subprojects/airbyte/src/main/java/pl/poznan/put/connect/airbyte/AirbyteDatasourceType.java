@@ -39,7 +39,7 @@ public class AirbyteDatasourceType extends CustomFlightDatasourceType
         final CustomFlightDatasourceTypeProperties properties = new CustomFlightDatasourceTypeProperties();
         setProperties(properties);
 
-        ConnectionActionResponse response = AirbyteProcessRunner.spec(imageName);
+        ConnectionActionResponse response = new AirbyteProcessRunner().spec(imageName);
         JsonSchema connectionSpecification = (JsonSchema) response.get("connectionSpecification");
 
         properties.setConnection(
